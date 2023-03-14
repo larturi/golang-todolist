@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+type filerType string
+
+const (
+	All       filerType = "all"
+	Pending   filerType = "pending"
+	Completed filerType = "completed"
+)
+
 type task struct {
 	name        string
 	description string
@@ -32,6 +40,39 @@ func (tl *taskList) removeToList(index int) {
 	tl.tasks = append(tl.tasks[:index], tl.tasks[index+1:]...)
 }
 
+func (tl *taskList) printTasks(filter filerType) {
+	for i, task := range tl.tasks {
+		if filter == Completed {
+			if task.completed {
+				fmt.Println("Index:", i)
+				fmt.Println("Nombre:", task.name)
+				fmt.Println("Descripción:", task.description)
+				fmt.Println("Completa?:", task.completed)
+				fmt.Println("")
+			}
+		}
+
+		if filter == Pending {
+			if !task.completed {
+				fmt.Println("Index:", i)
+				fmt.Println("Nombre:", task.name)
+				fmt.Println("Descripción:", task.description)
+				fmt.Println("Completa?:", task.completed)
+				fmt.Println("")
+			}
+		}
+
+		if filter == All {
+			fmt.Println("Index:", i)
+			fmt.Println("Nombre:", task.name)
+			fmt.Println("Descripción:", task.description)
+			fmt.Println("Completa?:", task.completed)
+			fmt.Println("")
+		}
+
+	}
+}
+
 func main() {
 
 	lista := &taskList{}
@@ -45,7 +86,7 @@ func main() {
 	t2 := &task{
 		name:        "Completar curso Ingles",
 		description: "Hacerlo este mes",
-		completed:   false,
+		completed:   true,
 	}
 
 	t3 := &task{
@@ -58,6 +99,6 @@ func main() {
 	lista.addToList(t2)
 	lista.addToList(t3)
 
-	fmt.Println(lista.tasks[0])
+	lista.printTasks(Pending)
 
 }
