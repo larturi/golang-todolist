@@ -75,7 +75,7 @@ func (tl *taskList) printTasks(filter filerType) {
 
 func main() {
 
-	lista := &taskList{}
+	listaLeandro := &taskList{}
 
 	t1 := &task{
 		name:        "Completar curso Go",
@@ -95,10 +95,35 @@ func main() {
 		completed:   false,
 	}
 
-	lista.addToList(t1)
-	lista.addToList(t2)
-	lista.addToList(t3)
+	listaLeandro.addToList(t1)
+	listaLeandro.addToList(t2)
+	listaLeandro.addToList(t3)
 
-	lista.printTasks(Pending)
+	mapaTareas := make(map[string]*taskList)
+	mapaTareas["Leandro"] = listaLeandro
+
+	fmt.Println("Tareas de Leandro:")
+	mapaTareas["Leandro"].printTasks(All)
+
+	listaCande := &taskList{}
+
+	tc1 := &task{
+		name:        "Ir a la escuela",
+		description: "De lunes a viernes",
+		completed:   true,
+	}
+
+	tc2 := &task{
+		name:        "Aprender Ingles",
+		description: "Es importante",
+		completed:   false,
+	}
+
+	listaCande.addToList(tc1)
+	listaCande.addToList(tc2)
+	mapaTareas["Cande"] = listaCande
+
+	fmt.Println("Tareas de Cande:")
+	mapaTareas["Cande"].printTasks(All)
 
 }
